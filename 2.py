@@ -66,5 +66,23 @@ def shell_sort(matrix_: List[List[int]]):
             step //= 2
 
 
-for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort]:
+def quick_sort(matrix_: List[List[int]]):
+    for row in matrix_:
+        if len(row) <= 1:
+            continue
+        support_element = row[0]
+        divided_row = [[], []]
+        for i in range(1, len(row)):
+            if row[i] < support_element:
+                divided_row[0].append(row[i])
+            else:
+                divided_row[1].append(row[i])
+        quick_sort(divided_row)
+        row.clear()
+        row.extend(divided_row[0])
+        row.append(support_element)
+        row.extend(divided_row[1])
+
+
+for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort, quick_sort]:
     measure_time(sort_func, matrix)
