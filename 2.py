@@ -106,5 +106,10 @@ def heapify(sort_nums, heap_size, root):
         heapify(sort_nums, heap_size, champion_index)
 
 
-for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort, quick_sort, tournament_sort]:
+def standard_sort(matrix_: List[List[int]]):
+    for row in matrix_:
+        row.sort()
+
+
+for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort, quick_sort, tournament_sort, standard_sort]:
     measure_time(sort_func, matrix)
