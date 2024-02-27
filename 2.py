@@ -84,5 +84,27 @@ def quick_sort(matrix_: List[List[int]]):
         row.extend(divided_row[1])
 
 
-for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort, quick_sort]:
+def tournament_sort(matrix_: List[List[int]]):
+    for row in matrix_:
+        for i in range(len(row), -1, -1):
+            heapify(row, len(row), i)
+        for i in range(len(row) - 1, 0, -1):
+            row[i], row[0] = row[0], row[i]
+            heapify(row, i, 0)
+
+
+def heapify(sort_nums, heap_size, root):
+    champion_index = root
+    left = (2 * root) + 1
+    right = (2 * root) + 2
+    if left < heap_size and sort_nums[left] > sort_nums[champion_index]:
+        champion_index = left
+    if right < heap_size and sort_nums[right] > sort_nums[champion_index]:
+        champion_index = right
+    if champion_index != root:
+        sort_nums[root], sort_nums[champion_index] = sort_nums[champion_index], sort_nums[root]
+        heapify(sort_nums, heap_size, champion_index)
+
+
+for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort, quick_sort, tournament_sort]:
     measure_time(sort_func, matrix)
