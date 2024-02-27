@@ -14,10 +14,10 @@ print(*matrix, sep="\n")
 print("=============")
 
 
-def measure_time(sort_func: Callable[[List[List[int]]], None], matrix_: List[List[int]]):
+def measure_time(sort_func_: Callable[[List[List[int]]], None], matrix_: List[List[int]]):
     matrix_copy = copy.deepcopy(matrix_)
     start_time = time.time()
-    sort_func(matrix_copy)
+    sort_func_(matrix_copy)
     print("--- {0} ms ---".format(round((time.time() - start_time) * 1000)))
 
 
@@ -51,5 +51,20 @@ def bubble_sort(matrix_: List[List[int]]):
                     row[i1], row[i1 + 1] = row[i1 + 1], row[i1]
 
 
-for sort_func in [choice_sort, insert_sort, bubble_sort]:
+def shell_sort(matrix_: List[List[int]]):
+    for row in matrix_:
+        last_index = len(row)
+        step = len(row) // 2
+        while step > 0:
+            for i in range(step, last_index):
+                j = i
+                delta = j - step
+                while delta >= 0 and row[delta] > row[j]:
+                    row[delta], row[j] = row[j], row[delta]
+                    j = delta
+                    delta = j - step
+            step //= 2
+
+
+for sort_func in [choice_sort, insert_sort, bubble_sort, shell_sort]:
     measure_time(sort_func, matrix)
